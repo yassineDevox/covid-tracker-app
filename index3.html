@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>covid-19 </title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/icon.png">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="css/loader.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" ></script>
+    
+    <style>
+        canvas{
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
+        </style>
+
+
+
+</head>
+
+<body>
+    <div id="charge">
+		<div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+	</div>
+    
+    
+        <div class="header">
+            
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <nav class="navbar navbar-expand-lg navbar-light">
+                            <a class="navbar-brand"  href="index.html">
+                                <span>Covid-19</span></a>
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarText">
+                                <ul class="navbar-nav mr-auto">
+                                  <li class="nav-item">
+                                    <a class="nav-link" href="index.html">Home</a>
+                                  </li>
+                                  <li class="nav-item">
+                                    <a class="nav-link" href="index2.html">Top Countries</a>
+                                  </li>
+                                  <li class="nav-item active">
+                                    <a class="nav-link" href="#">All Countries<span class="sr-only">(current)</span></a>
+                                  </li>
+                                </ul>
+                              </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-body pt-5">
+            <div class="container-fluid">
+                
+                    <input type="text" class="form-control form-control-lg " id="find_country" placeholder="search...">
+                  
+                <div class="row py-3" id="test">
+                    
+
+                </div>
+                
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="container">
+                <div class="row align-items-center">
+                    
+                        <div class="col copy_right text-center">
+                            Copyright © 2020 All Rights Reserved.
+                        </div>
+                    
+                </div>
+            </div>
+        </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+            <img class="pr-2" id="country_flag" width="50">
+          <h5 class="modal-title" id="country_name"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+                    <div class="row">
+                        
+                        <div class="col-xl-4">
+                            <div class="country-data">
+                                <div class="icon gradient-1">
+                                    <i class="fas fa-virus"></i>
+                                </div>
+                                <div>
+                                    <span>Total Cases</span>
+                                    <h3 id="country_cases"></h3>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-xl-4">
+                            <div class="country-data">
+                                <div class="icon gradient-3">
+                                    <i class="fas fa-bell"></i>
+                                </div>
+                                <div>
+                                    <span>Today Cases</span>
+                                    <h3 id="country_todayCases"></h3>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-xl-4">
+                            <div class="country-data">
+                                <div class="icon gradient-9">
+                                    <i class="fas fa-procedures"></i>
+                                </div>
+                                <div>
+                                    <span>Total Deaths</span>
+                                    <h3 id="country_deaths"></h3>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-xl-4">
+                            <div class="country-data">
+                                <div class="icon gradient-12">
+                                    <i class="fas fa-bed"></i>
+                                </div>
+                                <div>
+                                    <span>Today Deaths</span>
+                                    <h3 id="country_todayDeaths"></h3>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-xl-4">
+                            <div class="country-data">
+                                <div class="icon gradient-4">
+                                    <i class="fas fa-child"></i>
+                                </div>
+                                <div>
+                                    <span>Recovered</span>
+                                    <h3 id="country_recovered"></h3>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-xl-4">
+                            <div class="country-data">
+                                <div class="icon gradient-8">
+                                    <i class="fas fa-head-side-cough"></i>
+                                </div>
+                                <div>
+                                    <span>Active</span>
+                                    <h3 id="country_active"></h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4">
+                            <div class="country-data">
+                                <div class="icon gradient-14">
+                                    <i class="fas fa-lungs-virus"></i>
+                                </div>
+                                <div>
+                                    <span>Critical</span>
+                                    <h3 id="country_critical"></h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4">
+                            <div class="country-data">
+                                <div class="icon gradient-15">
+                                    <i class="fas fa-vial"></i>
+                                </div>
+                                <div>
+                                    <span>Cases Per Million</span>
+                                    <h3 id="country_casesPerOneMillion"></h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4">
+                            <div class="country-data">
+                                <div class="icon gradient-9">
+                                    <i class="fas fa-skull"></i>
+                                </div>
+                                <div>
+                                    <span>Deaths Per Million</span>
+                                    <h3 id="country_deathsPerOneMillion"></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div style="width:100%;">
+
+                        <canvas id="canvas"></canvas>
+                    </div>
+
+
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+    <script>
+
+        var data = null;
+        var card = '';
+        var table = [];
+        var f = document.querySelector('#find_country');
+
+                var config = {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: []
+                },
+                options: {
+                    responsive: true,
+                    title: {
+                        display: true,
+                        text: '30 Days Statistic'
+                    },
+                    tooltips: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    hover: {
+                        mode: 'nearest',
+                        intersect: true
+                    },
+                    scales: {
+                        
+                        x: {
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Days'
+                            }
+                        },
+                        y: {
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Value',
+                                
+                            }
+                        }
+                    }
+                }
+            };
+        
+        window.onload = function() {
+		    var ctx = document.getElementById('canvas').getContext('2d');
+		    window.myLine = new Chart(ctx, config);
+        };
+
+var xhr = new XMLHttpRequest();
+
+xhr.open("GET", "https://corona.lmao.ninja/v2/countries");
+
+
+xhr.addEventListener("readystatechange", function () {
+	if (this.readyState === this.DONE) {
+        var list = JSON.parse(this.responseText);
+
+        list.sort(function(a, b) {
+            return b.cases - a.cases;
+        });
+        
+        console.log(list);
+
+// a changer apres
+
+for (const i in list) {
+               
+                table[list[i].countryInfo.iso2] = {
+                    'country':list[i].country,
+                    'flag':list[i].countryInfo.flag,
+                    'cases':list[i].cases,
+                    'deaths':list[i].deaths,
+                    'recovered':list[i].recovered,
+                    'active':list[i].active,
+                    'todayCases':list[i].todayCases,
+                    'todayDeaths':list[i].todayDeaths,
+                    'critical':list[i].critical,
+                    'casesPerOneMillion':list[i].casesPerOneMillion,
+                    'deathsPerOneMillion':list[i].deathsPerOneMillion};
+                  
+            
+            }
+
+
+        allCountry(list);
+
+        var b = document.querySelectorAll('.btn-country');
+
+    
+        
+    for (let i = 0; i < b.length; i++) {
+
+        b[i].addEventListener('click', function () {
+            modelInfo(table[this.getAttribute('data-id')]);
+            chartCountry(this.getAttribute('data-id'));
+        });
+        
+    }
+    
+
+        // document.querySelector('.header').style.position = 'fixed';
+        document.querySelector('#charge').style.display = 'none';
+	}
+
+    f.addEventListener('input',function () {
+        card = '';
+        if (f.value == '') {
+            allCountry(list);
+        } else {
+            
+            for (const i in list) {
+            
+            if (list[i].country.toLowerCase().includes(f.value.toLowerCase())) {
+                card  += cardCountry(list[i]);
+            }
+        }
+        
+        document.querySelector('#test').innerHTML = card;
+        
+        }
+
+        var b = document.querySelectorAll('.btn-country');
+
+    
+        
+    for (let i = 0; i < b.length; i++) {
+
+        b[i].addEventListener('click', function () {
+            modelInfo(table[this.getAttribute('data-id')]);
+            chartCountry(this.getAttribute('data-id'));
+        });
+        
+    }
+    
+    });
+
+    
+
+});
+
+xhr.send(data);
+
+function modelInfo(item) {
+
+console.log(item);
+    document.querySelector('#country_flag').src = item.flag;
+            document.querySelector('#country_name').innerHTML = item.country;
+
+            document.querySelector('#country_cases').innerHTML = item.cases;
+            document.querySelector('#country_todayCases').innerHTML = item.todayCases;
+            document.querySelector('#country_deaths').innerHTML = item.deaths;
+            document.querySelector('#country_todayDeaths').innerHTML = item.todayDeaths;
+            document.querySelector('#country_recovered').innerHTML = item.recovered;
+            document.querySelector('#country_active').innerHTML = item.active;
+            document.querySelector('#country_critical').innerHTML = item.critical;
+            document.querySelector('#country_casesPerOneMillion').innerHTML = item.casesPerOneMillion;
+            document.querySelector('#country_deathsPerOneMillion').innerHTML = item.deathsPerOneMillion;
+
+}
+
+function allCountry(list) {
+    
+    for (const i in list) {
+            
+            card  += cardCountry(list[i]);
+        }
+        
+        document.querySelector('#test').innerHTML = card;
+    
+}
+
+function cardCountry(item) {
+    return '<div class="col-lg-6">'+
+    '<button type="button" class="btn btn-country" data-id="'+item.countryInfo.iso2+'" data-toggle="modal" data-target="#exampleModalCenter">'+
+                        '<div class="card">'+
+                            '<div class="card-header">'+
+                                '<h4 class="card-title"><span id="usa_flag" class="mr-2"><img src="'+item.countryInfo.flag+'" width="50" alt=""></span>'+item.country+'</h4>'+
+                            '</div>'+
+                            '<div class="card-body widget">'+
+                                '<div class="row">'+
+                                    '<div class="col-xl-3 mb-3">'+
+                                       ' <span>Cases</span>'+
+                                        '<h4>'+item.cases+'</h4>'+
+                                    '</div>'+
+                                    '<div class="col-xl-3 mb-3">'+
+                                        '<span>Death</span>'+
+                                        '<h4>'+item.deaths+'</h4>'+
+                                    '</div>'+
+                                    '<div class="col-xl-3 mb-3">'+
+                                        '<span>Recovered</span>'+
+                                        '<h4>'+item.recovered+'</h4>'+
+                                    '</div>'+
+                                    '<div class="col-xl-3 mb-3">'+
+                                        '<span>Today Death</span>'+
+                                        '<h4>'+item.todayDeaths+'</h4>'+
+                                   ' </div>'+
+                                    '<div class="col-xl-3 mb-3">'+
+                                        '<span>Today Cases</span>'+
+                                        '<h4>'+item.todayCases+'</h4>'+
+                                    '</div>'+
+                                   ' <div class="col-xl-3 mb-3">'+
+                                        '<span>Critical</span>'+
+                                        '<h4>'+item.critical+'</h4>'+
+                                    '</div>'+
+                                    '<div class="col-xl-3 mb-3">'+
+                                        '<span>Active Cases</span>'+
+                                        '<h4>'+item.active+'</h4>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>'+
+                        '</div></button>'+
+                    '</div>';
+}
+
+
+function chartCountry(iso) {
+    
+    var req = new XMLHttpRequest();
+    var d = [];
+    var cases = [];
+    var deaths = [];
+    var recovered = [];
+    var all;
+
+    config.data.datasets.splice(0, 3);
+    window.myLine.update();
+
+        req.open("GET", "https://corona.lmao.ninja/v2/historical/"+iso.toLowerCase()+"?lastdays=30");
+        req.addEventListener("readystatechange", function () {
+            if (this.readyState === this.DONE) {
+                all = JSON.parse(req.responseText);
+                for (const i in all.timeline.cases) {
+                    var ts = new Date(i);
+                    d.push(ts.getDate()+'/'+(ts.getMonth()+1));
+                    cases.push(all.timeline.cases[i]);
+                    deaths.push(all.timeline.deaths[i]);
+                    recovered.push(all.timeline.recovered[i]);
+                }
+            
+
+            config.data.labels = d;
+
+            config.options.title.text = all.country+' 30 Days Statistic';
+
+            var ds1 = [{
+			            label: 'Confirmed',
+                        backgroundColor: window.chartColors.blue,
+                        borderColor: window.chartColors.blue,
+                        data: cases,
+                        fill: false,
+            },{
+			            label: 'deaths',
+                        backgroundColor: window.chartColors.red,
+                        borderColor: window.chartColors.red,
+                        data: deaths,
+                        fill: false,
+            },{
+			            label: 'recovered',
+                        backgroundColor: window.chartColors.green,
+                        borderColor: window.chartColors.green,
+                        data: recovered,
+                        fill: false,
+            }];
+
+            config.data.datasets = ds1;
+            
+		    window.myLine.update();
+        }
+        });
+        
+        req.send();
+
+}
+
+  
+    
+    
+        </script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" ></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+
+    
+</body>
+
+</html>

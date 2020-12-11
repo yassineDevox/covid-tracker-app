@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>covid-19 </title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/icon.png">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="./css/style.css">
+    <link href="css/jqvmap.css" media="screen" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="css/loader.css">
+    <style>
+        .info{
+    position: absolute;
+    z-index: 1;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      border-radius: 3px;
+      background: #292929;
+      color: white;
+      font-family: sans-serif, Verdana;
+      font-size: smaller;
+      padding: 3px;
+    pointer-events:none;
+  }
+      </style>
+</head>
+
+<body>
+
+    <div id="charge">
+		<div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+	</div>
+
+        <div class="header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <nav class="navbar navbar-expand-lg navbar-light">
+                            <a class="navbar-brand"  href="#">
+                                <span>Covid-19</span></a>
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarText">
+                                <ul class="navbar-nav mr-auto">
+                                  <li class="nav-item ">
+                                    <a class="nav-link" href="index.html">Home </a>
+                                  </li>
+                                  <li class="nav-item active">
+                                    <a class="nav-link" href="#">Top Countries<span class="sr-only">(current)</span></a>
+                                  </li>
+                                  <li class="nav-item">
+                                    <a class="nav-link" href="index3.html">All Countries</a>
+                                  </li>
+                                </ul>
+                              </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-body  pt-5">
+            
+            <div class="container-fluid">
+                
+                <div class="row" id="test">
+                    
+                    <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6">
+                        <div class="country-statistics">
+                            <h4>Top Cases</h4>
+                            <ul id="country_cases" class="alt-amin">
+                                <li><span></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6">
+                        <div class="country-statistics">
+                            <h4>Today Cases</h4>
+                            <ul id="country_todayCases" class="alt-blue">
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6">
+                        <div class="country-statistics">
+                            <h4>Top Deaths</h4>
+                            <ul id="country_deaths" class="alt-red">
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6">
+                        <div class="country-statistics">
+                            <h4>Today Death</h4>
+                            <ul id="country_todayDeath" class="alt-orange">
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6">
+                        <div class="country-statistics">
+                            <h4>Top Actived</h4>
+                            <ul id="country_active" class="alt-frost">
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6">
+                        <div class="country-statistics">
+                            <h4>Top Recovered</h4>
+                            <ul id="country_recovered" class="alt-green">
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="container">
+                <div class="row align-items-center">
+                    
+                        <div class="col copy_right text-center">
+                            Copyright © 2020 All Rights Reserved.
+                        </div>
+                    
+                </div>
+            </div>
+        </div>
+
+
+
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" src="js/jquery.vmap.js"></script>
+        <script type="text/javascript" src="js/jquery.vmap.world.js" charset="utf-8"></script>
+        <script type="text/javascript" src="js/jquery.vmap.sampledata.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" ></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+
+    
+        <script>
+    
+            var data = null;
+            var card = '';
+           
+    var xhr = new XMLHttpRequest();
+
+
+
+
+    xhr.open("GET", "https://corona.lmao.ninja/v2/countries");
+    
+    
+    xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === this.DONE) {
+            var list = JSON.parse(this.responseText);
+
+            // Top Cases
+            list.sort(function(a, b) {
+                return b.cases - a.cases;
+            });
+            
+            for (let i = 0; i < 20; i++) {
+                card += '<li><span><img src="'+list[i].countryInfo.flag+'" width="30" alt="">'+list[i].country+'</span><span>'+list[i].cases+'</span></li>';
+                
+            }
+            document.querySelector('#country_cases').innerHTML = card;
+
+            // Today Cases
+            list.sort(function(a, b) {
+                return b.todayCases - a.todayCases;
+            });
+            card = '';
+            for (let i = 0; i < 20; i++) {
+                card += '<li><span><img src="'+list[i].countryInfo.flag+'" width="30" alt="">'+list[i].country+'</span><span>'+list[i].todayCases+'</span></li>';
+                
+            }
+            document.querySelector('#country_todayCases').innerHTML = card;
+
+            // Top Deaths
+            list.sort(function(a, b) {
+                return b.deaths - a.deaths;
+            });
+            card = '';
+            for (let i = 0; i < 20; i++) {
+                card += '<li><span><img src="'+list[i].countryInfo.flag+'" width="30" alt="">'+list[i].country+'</span><span>'+list[i].deaths+'</span></li>';
+                
+            }
+            document.querySelector('#country_deaths').innerHTML = card;
+
+            // Today Death
+            list.sort(function(a, b) {
+                return b.todayDeaths - a.todayDeaths;
+            });
+            card = '';
+            for (let i = 0; i < 20; i++) {
+                card += '<li><span><img src="'+list[i].countryInfo.flag+'" width="30" alt="">'+list[i].country+'</span><span>'+list[i].todayDeaths+'</span></li>';
+                
+            }
+            document.querySelector('#country_todayDeath').innerHTML = card;
+
+            // Top Actived
+            list.sort(function(a, b) {
+                return b.active - a.active;
+            });
+            card = '';
+            for (let i = 0; i < 20; i++) {
+                card += '<li><span><img src="'+list[i].countryInfo.flag+'" width="30" alt="">'+list[i].country+'</span><span>'+list[i].active+'</span></li>';
+                
+            }
+            document.querySelector('#country_active').innerHTML = card;
+
+             // Top Recovered
+             list.sort(function(a, b) {
+                return b.recovered - a.recovered;
+            });
+            card = '';
+            for (let i = 0; i < 20; i++) {
+                card += '<li><span><img src="'+list[i].countryInfo.flag+'" width="30" alt="">'+list[i].country+'</span><span>'+list[i].recovered+'</span></li>';
+                
+            }
+            document.querySelector('#country_recovered').innerHTML = card;
+
+            document.querySelector('.header').style.position = 'fixed';
+            document.querySelector('#charge').style.display = 'none';
+        }
+    });
+    
+    xhr.send(data);
+        
+    
+        
+            jQuery(document).ready(function () {
+              jQuery('#vmap').vectorMap({
+                map: 'world_en',
+                backgroundColor: '#333333',
+                color: '#ffffff',
+                hoverOpacity: 0.7,
+                selectedColor: '#666666',
+                enableZoom: true,
+                showTooltip: false,
+                scaleColors: ['#C8EEFF', '#006491'],
+                values: sample_data,
+                normalizeFunction: 'polynomial',
+                onRegionOver: function(event, code, region){
+                  $('.info').css('display','block');
+                 
+                    $(this).mousemove(function (e) {
+    
+                  $('.info').html(card[code.toUpperCase()].country+
+                  ' <img src="'+card[code.toUpperCase()].flag+'" width="30">'+
+                  '<br>Cases:'+card[code.toUpperCase()].cases+
+                  '<br>Deaths:'+card[code.toUpperCase()].deaths+
+                  '<br>Recovered:'+card[code.toUpperCase()].recovered+
+                  '<br>Active:'+card[code.toUpperCase()].active);
+                  $('.info').css({
+                 left: e.clientX - 30,
+                 top: e.pageY +50});
+                    });
+                    
+                },
+                onRegionOut: function(event, code, region){
+                  $('.info').css('display','none');
+                }
+              });
+            });
+          </script>
+
+
+
+
+
+    
+</body>
+
+</html>
